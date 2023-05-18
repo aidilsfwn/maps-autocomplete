@@ -17,6 +17,7 @@ const adStyles = {
     alignItems: 'center',
     justifyContent: 'space-between',
     backgroundColor: colors.primary,
+    color: colors.secondary,
     padding: '0 5vw',
   },
 }

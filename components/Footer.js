@@ -15,6 +15,6 @@ const AppFooter = () => {
   )
 }
 
-const adStyles = { container: { backgroundColor: colors.primary, alignItems: 'center' } }
+const adStyles = { container: { backgroundColor: colors.primary, color: colors.secondary, alignItems: 'center' } }
 
 export { AppFooter }
