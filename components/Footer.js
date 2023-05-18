@@ -1,13 +1,14 @@
 import React from 'react'
-import { Layout, Row, Col } from 'antd'
-import styles from '../styles/Footer.module.css'
+import { Layout, Row, Col, Typography } from 'antd'
+
+const { Text } = Typography
 
 const AppFooter = () => {
   return (
     <Row>
       <Col span={24}>
         <Layout style={adStyles.container}>
-          <p className={styles.text}>Powered by nextjs. Developed by aidilsafwan.</p>
+          <Text italic>Powered by nextjs. Developed by aidilsafwan.</Text>
         </Layout>
       </Col>
     </Row>
