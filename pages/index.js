@@ -3,7 +3,6 @@ import Head from 'next/head'
 import { Layout } from 'antd'
 import { LoadScript } from '@react-google-maps/api'
 import { SearchCard, MapCard } from '../components'
-import { colors } from '../constants/colors'
 
 const API_KEY = process.env.NEXT_PUBLIC_MAPS_API_KEY
 
@@ -29,7 +28,7 @@ const Home = () => {
         <title>Maps Autocomplete</title>
       </Head>
       <LoadScript googleMapsApiKey={API_KEY} libraries={['places']}>
-        <Layout style={{ height: '100%', backgroundColor: colors.primary }}>
+        <Layout style={{ height: '100%' }}>
           <SearchCard inputRef={inputRef} onPlacesChanged={handlePlaceChanged} recent={recent} />
           <MapCard center={center} zoom={zoom} />
         </Layout>

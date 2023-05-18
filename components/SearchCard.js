@@ -1,7 +1,6 @@
 import React from 'react'
 import { Row, Col, Input } from 'antd'
 import { StandaloneSearchBox } from '@react-google-maps/api'
-import { colors } from '../constants/colors'
 import styles from '../styles/Home.module.css'
 
 const { Search } = Input
@@ -28,8 +27,6 @@ const SearchCard = ({ inputRef, onPlacesChanged, recent }) => {
 
 const adStyles = {
   searchContainer: {
-    color: '#6e6e6e',
-    backgroundColor: colors.primary,
     padding: '2vh',
     margin: '2vh 5vw 1vh 5vw',
     borderRadius: 20,

@@ -1,7 +1,6 @@
 import React from 'react'
 import { Row } from 'antd'
 import { GoogleMap, Marker } from '@react-google-maps/api'
-import { colors } from '../constants/colors'
 
 const MapCard = ({ center, zoom }) => {
   return (
@@ -16,7 +15,6 @@ const MapCard = ({ center, zoom }) => {
 const adStyles = {
   mapContainer: {
     height: '100%',
-    backgroundColor: colors.primary,
     padding: '2vh',
     margin: '1vh 5vw 3vh 5vw',
     justifyContent: 'center',
