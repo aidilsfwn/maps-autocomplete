@@ -16,7 +16,7 @@ const RecentCard = ({ list }) => {
               dataSource={list}
               renderItem={(item) => (
                 <List.Item>
-                  <List.Item.Meta title={item.structured_formatting.main_text} description={item.structured_formatting.secondary_text} />
+                  <List.Item.Meta title={item.name} description={item.address} />
                 </List.Item>
               )}
             />

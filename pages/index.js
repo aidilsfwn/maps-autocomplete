@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import Head from 'next/head'
 import { Layout } from 'antd'
-import { fetchAutoComplete, fetchPlaceDetails, setRecentSearches } from '../store/autoCompleteSlice'
+import { fetchAutoComplete, fetchPlaceDetails } from '../store/autoCompleteSlice'
 import { SearchCard, MapCard, RecentCard } from '../components'
 import { useDispatch, useSelector } from 'react-redux'
 
@@ -14,10 +14,8 @@ const Home = () => {
     dispatch(fetchAutoComplete(searchInput))
   }, [searchInput])
 
-  const handleClickItem = async (e) => {
-    setSearchInput(e.structured_formatting.main_text)
-    dispatch(fetchPlaceDetails(e.place_id))
-    dispatch(setRecentSearches(e))
+  const handleClickItem = (e) => {
+    dispatch(fetchPlaceDetails(e))
   }
 
   return (

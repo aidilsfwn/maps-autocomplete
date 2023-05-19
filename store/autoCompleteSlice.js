@@ -17,8 +17,8 @@ export const fetchAutoComplete = createAsyncThunk('fetchAutoComplete', async (in
   return response.data
 })
 
-export const fetchPlaceDetails = createAsyncThunk('fetchPlaceDetails', async (placeID) => {
-  const url = `http://localhost:3001/api/getPlaceDetails?placeID=${placeID}`
+export const fetchPlaceDetails = createAsyncThunk('fetchPlaceDetails', async (place) => {
+  const url = `http://localhost:3001/api/getPlaceDetails?placeID=${place.place_id}`
   const headers = { Accept: 'application/json' }
   const response = await axios.get(url, { headers })
   return response.data
@@ -30,12 +30,6 @@ export const autoCompleteSlice = createSlice({
   reducers: {
     setIsError(state, action) {
       state.isError = action.payload
-    },
-    setRecentSearches(state, action) {
-      let list = state.recentSearches.reverse()
-      list.push(action.payload)
-      const reversedList = list.reverse()
-      state.recentSearches = reversedList
     },
   },
   extraReducers: (builder) => {
@@ -50,16 +44,27 @@ export const autoCompleteSlice = createSlice({
       state.status = 'idle'
     })
     builder.addCase(fetchPlaceDetails.fulfilled, (state, action) => {
+      console.log({ action })
       if (action.payload.status === 'OK') {
+        state.searchResult = initialState.searchResult
+
+        let place = { name: action.payload.result.name, address: action.payload.result.formatted_address }
+
         state.center = { lat: action.payload.result.geometry.location.lat, lng: action.payload.result.geometry.location.lng }
-        state.activePlaceDetails = { name: action.payload.result.name, address: action.payload.result.formatted_address, phoneNo: action.payload.result.formatted_phone_number }
-      } else state.isError = true
-      state.searchResult = initialState.searchResult
+        state.activePlaceDetails = place
+
+        let list = state.recentSearches.reverse()
+        list.push(place)
+        const reversedList = list.reverse()
+        state.recentSearches = reversedList
+      } else {
+        state.isError = true
+      }
       state.status = 'idle'
     })
   },
 })
 
-export const { setIsError, setRecentSearches } = autoCompleteSlice.actions
+export const { setIsError } = autoCompleteSlice.actions
 
 export default autoCompleteSlice.reducer
