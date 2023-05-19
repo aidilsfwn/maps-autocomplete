@@ -7,6 +7,7 @@ const initialState = {
   status: 'idle',
   center: { lat: 3.1474660277202906, lng: 101.69953519998894 },
   isError: false,
+  activePlaceDetails: {},
 }
 
 export const fetchAutoComplete = createAsyncThunk('fetchAutoComplete', async (input) => {
@@ -31,9 +32,10 @@ export const autoCompleteSlice = createSlice({
       state.isError = action.payload
     },
     setRecentSearches(state, action) {
-      let list = state.recentSearches
+      let list = state.recentSearches.reverse()
       list.push(action.payload)
-      state.recentSearches = list
+      const reversedList = list.reverse()
+      state.recentSearches = reversedList
     },
   },
   extraReducers: (builder) => {
@@ -48,8 +50,11 @@ export const autoCompleteSlice = createSlice({
       state.status = 'idle'
     })
     builder.addCase(fetchPlaceDetails.fulfilled, (state, action) => {
-      if (action.payload.status === 'OK') state.center = { lat: action.payload.result.geometry.location.lat, lng: action.payload.result.geometry.location.lng }
-      else state.isError = true
+      if (action.payload.status === 'OK') {
+        state.center = { lat: action.payload.result.geometry.location.lat, lng: action.payload.result.geometry.location.lng }
+        state.activePlaceDetails = { name: action.payload.result.name, address: action.payload.result.formatted_address, phoneNo: action.payload.result.formatted_phone_number }
+      } else state.isError = true
+      state.searchResult = initialState.searchResult
       state.status = 'idle'
     })
   },

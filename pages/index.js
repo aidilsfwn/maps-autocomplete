@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from 'react-redux'
 
 const Home = () => {
   const dispatch = useDispatch()
-  const { searchResult, recentSearches, center } = useSelector((state) => state.autoComplete)
+  const { searchResult, recentSearches, center, activePlaceDetails } = useSelector((state) => state.autoComplete)
   const [searchInput, setSearchInput] = useState('')
 
   useEffect(() => {
@@ -26,7 +26,7 @@ const Home = () => {
         <title>Maps Autocomplete</title>
       </Head>
       <Layout style={{ height: '100%' }}>
-        <SearchCard searchInput={searchInput} onClickItem={(e) => handleClickItem(e)} setSearchInput={(e) => setSearchInput(e.target.value)} searchResult={searchResult} />
+        <SearchCard activePlaceDetails={activePlaceDetails} searchInput={searchInput} onClickItem={(e) => handleClickItem(e)} setSearchInput={(e) => setSearchInput(e.target.value)} searchResult={searchResult} />
         <MapCard center={center} />
         <RecentCard list={recentSearches} />
       </Layout>
