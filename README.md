@@ -1,5 +1,10 @@
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
+## Pre-Requisite
+
+1. Paste .env.local file in project root directory.
+2. Paste .env file in /server.
+
 ## Getting Started
 
 First, run the client:
