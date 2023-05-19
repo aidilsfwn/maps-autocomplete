@@ -31,7 +31,7 @@ app.get('/api/getAutoComplete', async (req, res) => {
 app.get('/api/getPlaceDetails', async (req, res) => {
   try {
     let placeID = req.query.placeID
-    const { data } = await axios.get(`https://maps.googleapis.com/maps/api/place/details/json?place_id=${placeID}&key=${process.env.MAPS_API_KEY}`)
+    const { data } = await axios.get(`https://maps.googleapis.com/maps/api/place/details/json?place_id=${placeID}&fields=name%2Cformatted_address%2Cgeometry&key=${process.env.MAPS_API_KEY}`)
     res.send(data)
   } catch (e) {
     console.log({ e })
