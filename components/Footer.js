@@ -15,6 +15,6 @@ const AppFooter = () => {
   )
 }
 
-const adStyles = { container: { alignItems: 'center' } }
+const adStyles = { container: { marginTop: '5vh', alignItems: 'center' } }
 
 export { AppFooter }

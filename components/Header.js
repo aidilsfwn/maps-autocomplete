@@ -1,21 +1,19 @@
 import React from 'react'
-import { Switch, Row, Typography } from 'antd'
+import { Layout, Typography } from 'antd'
 
 const { Title } = Typography
 
 const AppHeader = () => {
   return (
-    <Row style={adStyles.container}>
+    <Layout style={adStyles.container}>
       <Title>Maps Autocomplete</Title>
-      <Switch />
-    </Row>
+    </Layout>
   )
 }
 
 const adStyles = {
   container: {
     alignItems: 'center',
-    justifyContent: 'space-between',
     padding: '0 5vw',
   },
 }

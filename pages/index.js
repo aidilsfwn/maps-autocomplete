@@ -1,39 +1,36 @@
-import React, { useState, useRef } from 'react'
+import React, { useState, useEffect } from 'react'
 import Head from 'next/head'
 import { Layout } from 'antd'
-import { LoadScript } from '@react-google-maps/api'
-import { SearchCard, MapCard } from '../components'
-
-const API_KEY = process.env.NEXT_PUBLIC_MAPS_API_KEY
+import { fetchAutoComplete, fetchPlaceDetails, setRecentSearches } from '../store/autoCompleteSlice'
+import { SearchCard, MapCard, RecentCard } from '../components'
+import { useDispatch, useSelector } from 'react-redux'
 
 const Home = () => {
-  const inputRef = useRef()
-  const [center, setCenter] = useState({ lat: 3.1474660277202906, lng: 101.69953519998894 })
-  const [recent, setRecent] = useState([])
-  const zoom = 15
+  const dispatch = useDispatch()
+  const { searchResult, recentSearches, center } = useSelector((state) => state.autoComplete)
+  const [searchInput, setSearchInput] = useState('')
 
-  const handlePlaceChanged = () => {
-    const [place] = inputRef.current.getPlaces()
-    if (place) {
-      let temp = [...recent]
-      temp.push(place.formatted_address)
-      setRecent(temp)
-      setCenter({ lat: place.geometry.location.lat(), lng: place.geometry.location.lng() })
-    }
+  useEffect(() => {
+    dispatch(fetchAutoComplete(searchInput))
+  }, [searchInput])
+
+  const handleClickItem = async (e) => {
+    setSearchInput(e.structured_formatting.main_text)
+    dispatch(fetchPlaceDetails(e.place_id))
+    dispatch(setRecentSearches(e))
   }
 
   return (
-    <div style={{ height: '100%' }}>
+    <Layout style={{ height: '100%' }}>
       <Head>
         <title>Maps Autocomplete</title>
       </Head>
-      <LoadScript googleMapsApiKey={API_KEY} libraries={['places']}>
-        <Layout style={{ height: '100%' }}>
-          <SearchCard inputRef={inputRef} onPlacesChanged={handlePlaceChanged} recent={recent} />
-          <MapCard center={center} zoom={zoom} />
-        </Layout>
-      </LoadScript>
-    </div>
+      <Layout style={{ height: '100%' }}>
+        <SearchCard searchInput={searchInput} onClickItem={(e) => handleClickItem(e)} setSearchInput={(e) => setSearchInput(e.target.value)} searchResult={searchResult} />
+        <MapCard center={center} />
+        <RecentCard list={recentSearches} />
+      </Layout>
+    </Layout>
   )
 }
 

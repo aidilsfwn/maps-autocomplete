@@ -1,25 +1,37 @@
 import React from 'react'
 import { Row } from 'antd'
-import { GoogleMap, Marker } from '@react-google-maps/api'
+import GoogleMapReact from 'google-map-react'
+import { FaMapMarker } from 'react-icons/fa'
+import { colors } from '../styles/colors'
 
-const MapCard = ({ center, zoom }) => {
+const Marker = () => {
+  return (
+    <div>
+      <FaMapMarker size={30} color={colors.yellow} />
+    </div>
+  )
+}
+
+const MapCard = ({ center }) => {
   return (
     <Row style={adStyles.mapContainer}>
-      <GoogleMap mapContainerStyle={{ width: '100%', height: '100%' }} zoom={zoom} center={center}>
-        <Marker position={center} />
-      </GoogleMap>
+      <GoogleMapReact bootstrapURLKeys={{ key: process.env.NEXT_PUBLIC_MAPS_API_KEY }} center={center} defaultZoom={15}>
+        <Marker lat={center.lat} lng={center.lng} text='My Marker' />
+      </GoogleMapReact>
     </Row>
   )
 }
 
 const adStyles = {
   mapContainer: {
-    height: '100%',
+    backgroundColor: colors.white,
+    height: '50vh',
     padding: '2vh',
-    margin: '1vh 5vw 3vh 5vw',
+    margin: '1vh 5vw 1vh 5vw',
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 20,
+    borderWidth: 1,
     boxShadow: '5px 5px 20px rgba(0, 0, 0, 0.2)',
   },
 }

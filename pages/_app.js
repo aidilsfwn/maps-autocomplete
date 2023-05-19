@@ -1,23 +1,16 @@
-import { ConfigProvider, theme, Layout } from 'antd'
-import { AppHeader, AppFooter } from '../components'
-import { appTheme } from '../configs/theme'
+import React from 'react'
+import { Provider } from 'react-redux'
+import { AppLayout } from '../components/Layout'
+import store from '../store/store'
 import '../styles/globals.css'
-
-const { darkAlgorithm, defaultAlgorithm } = theme
 
 const MyApp = ({ Component, pageProps }) => {
   return (
-    <ConfigProvider theme={{ ...appTheme, algorithm: false ? darkAlgorithm : defaultAlgorithm }}>
-      <Layout style={{ height: '100vh' }}>
-        <AppHeader />
-
-        <Layout>
-          <Component {...pageProps} />
-        </Layout>
-
-        <AppFooter />
-      </Layout>
-    </ConfigProvider>
+    <Provider store={store}>
+      <AppLayout>
+        <Component {...pageProps} />
+      </AppLayout>
+    </Provider>
   )
 }
 
